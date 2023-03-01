@@ -61,7 +61,18 @@ namespace MvcTaskManager.Controllers
             return Ok(projectsViewModel);
         }
 
-        [HttpPost]
+		[HttpGet]
+		[Route("api/projects/searchbyprojectid/{ProjectID}")]
+		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+		public IActionResult GetProjectByProject(int ProjectID)
+		{
+			Project project = db.Projects.Include("ClientLocation").Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
+
+			ProjectViewModel projectViewModel = new ProjectViewModel() { ProjectID = project.ProjectID, ProjectName = project.ProjectName, TeamSize = project.TeamSize, DateOfStart = project.DateOfStart.ToString("dd/MM/yyyy"), Active = project.Active, ClientLocation = project.ClientLocation, ClientLocationID = project.ClientLocationID, Status = project.Status };
+			return Ok(projectViewModel);
+		}
+
+		[HttpPost]
         [Route("api/projects")]
         [Authorize]
         [ValidateAntiForgeryToken]
