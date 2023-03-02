@@ -39,7 +39,30 @@ namespace MvcTaskManager.Controllers
             
             return Ok(user);
         }
-    }
+
+		[HttpPost]
+		[Route("register")]
+		public async Task<IActionResult> Register([FromBody] SignUpViewModel signUpViewModel)
+		{
+			var user = await _usersService.Register(signUpViewModel);
+			if (user == null)
+				return BadRequest(new { message = "Invalid Data" });
+
+			HttpContext.User = await _applicationSignInManager.CreateUserPrincipalAsync(user);
+			var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+			Response.Headers.Add("Access-Control-Expose-Headers", "XSRF-REQUEST-TOKEN");
+			Response.Headers.Add("XSRF-REQUEST-TOKEN", tokens.RequestToken);
+
+			return Ok(user);
+		}
+
+		[Route("api/getUserByEmail/{Email}")]
+		public async Task<IActionResult> GetUserByEmail(string Email)
+		{
+			var user = await _usersService.GetUserByEmail(Email);
+			return Ok(user);
+		}
+	}
 }
 
 

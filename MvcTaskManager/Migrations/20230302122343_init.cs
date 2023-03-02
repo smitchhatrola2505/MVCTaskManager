@@ -41,7 +41,13 @@ namespace MvcTaskManager.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<string>(nullable: true),
+                    CountryID = table.Column<int>(nullable: false),
+                    ReceiveNewsLetters = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,6 +65,19 @@ namespace MvcTaskManager.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClientLocations", x => x.ClientLocationID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Countries",
+                columns: table => new
+                {
+                    CountryID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CountryName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.CountryID);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,6 +187,27 @@ namespace MvcTaskManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Skills",
+                columns: table => new
+                {
+                    SkillID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SkillName = table.Column<string>(nullable: true),
+                    SkillLevel = table.Column<string>(nullable: true),
+                    Id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Skills", x => x.SkillID);
+                    table.ForeignKey(
+                        name: "FK_Skills_AspNetUsers_Id",
+                        column: x => x.Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -201,6 +241,206 @@ namespace MvcTaskManager.Migrations
                     { 4, "New York" },
                     { 5, "London" },
                     { 6, "Tokyo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "CountryID", "CountryName" },
+                values: new object[,]
+                {
+                    { 123, "Lebanon" },
+                    { 124, "Palestine" },
+                    { 125, "Croatia" },
+                    { 126, "Bosnia and Herzegovina" },
+                    { 127, "Kuwait" },
+                    { 128, "Moldova" },
+                    { 129, "Liberia" },
+                    { 130, "Mauritania" },
+                    { 131, "Panama" },
+                    { 132, "Uruguay" },
+                    { 135, "Albania" },
+                    { 134, "Lithuania" },
+                    { 122, "Republic of the Congo" },
+                    { 136, "Oman" },
+                    { 137, "Mongolia" },
+                    { 138, "Jamaica" },
+                    { 139, "Lesotho" },
+                    { 140, "Namibia" },
+                    { 141, "Macedonia" },
+                    { 142, "Slovenia" },
+                    { 133, "Armenia" },
+                    { 121, "New Zealand" },
+                    { 118, "Central African Republic" },
+                    { 119, "Ireland" },
+                    { 99, "Serbia" },
+                    { 100, "Papua New Guinea" },
+                    { 101, "Paraguay" },
+                    { 102, "Laos" },
+                    { 103, "Libya" },
+                    { 104, "Jordan" },
+                    { 105, "Sierra Leone" },
+                    { 106, "Togo" },
+                    { 107, "El Salvador" },
+                    { 120, "Georgia" },
+                    { 108, "Nicaragua" },
+                    { 110, "Denmark" },
+                    { 111, "Kyrgyzstan" },
+                    { 112, "Slovakia" },
+                    { 113, "Finland" },
+                    { 114, "Singapore" },
+                    { 115, "Turkmenistan" },
+                    { 116, "Norway" },
+                    { 117, "Costa Rica" },
+                    { 143, "Latvia" },
+                    { 109, "Eritrea" },
+                    { 144, "Botswana" },
+                    { 147, "Gabon" },
+                    { 146, "Gambia" },
+                    { 172, "Iceland" },
+                    { 173, "Belize" },
+                    { 174, "Barbados" },
+                    { 175, "Vanuatu" },
+                    { 176, "Samoa" },
+                    { 177, "Saint Lucia" },
+                    { 178, "Kiribati" },
+                    { 179, "Grenada" },
+                    { 180, "Tonga" },
+                    { 171, "Maldives" },
+                    { 181, "Federated States of Micronesia" },
+                    { 183, "Seychelles" },
+                    { 184, "Antigua and Barbuda" },
+                    { 185, "Andorra" },
+                    { 186, "Dominica" },
+                    { 187, "Liechtenstein" },
+                    { 188, "Monaco" },
+                    { 189, "San Marino" },
+                    { 190, "Palau" },
+                    { 191, "Tuvalu" },
+                    { 182, "Saint Vincent and the Grenadines" },
+                    { 170, "Bahamas" },
+                    { 169, "Brunei" },
+                    { 168, "Malta" },
+                    { 98, "Bulgaria" },
+                    { 148, "Guinea-Bissau" },
+                    { 149, "Trinidad and Tobago" },
+                    { 150, "Estonia" },
+                    { 151, "Mauritius" },
+                    { 152, "Swaziland" },
+                    { 153, "Bahrain" },
+                    { 154, "Timor-Leste" },
+                    { 155, "Cyprus" },
+                    { 156, "Fiji" },
+                    { 157, "Djibouti" },
+                    { 158, "Guyana" },
+                    { 159, "Equatorial Guinea" },
+                    { 160, "Bhutan" },
+                    { 161, "Comoros" },
+                    { 162, "Montenegro" },
+                    { 163, "Western Sahara" },
+                    { 164, "Suriname" },
+                    { 165, "Luxembourg" },
+                    { 166, "Solomon Islands" },
+                    { 167, "Cape Verde" },
+                    { 145, "Qatar" },
+                    { 97, "Tajikistan" },
+                    { 94, "Burundi" },
+                    { 95, "Switzerland" },
+                    { 26, "Spain" },
+                    { 27, "Colombia" },
+                    { 28, "Ukraine" },
+                    { 29, "Tanzania" },
+                    { 30, "Argentina" },
+                    { 31, "Kenya" },
+                    { 32, "Poland" },
+                    { 33, "Algeria" },
+                    { 34, "Canada" },
+                    { 25, "Myanmar" },
+                    { 35, "Uganda" },
+                    { 37, "Morocco" },
+                    { 38, "Sudan" },
+                    { 39, "Peru" },
+                    { 40, "Malaysia" },
+                    { 41, "Uzbekistan" },
+                    { 42, "Saudi Arabia" },
+                    { 43, "Venezuela" },
+                    { 44, "Nepal" },
+                    { 45, "Afghanistan" },
+                    { 36, "Iraq" },
+                    { 24, "South Korea" },
+                    { 23, "South Africa" },
+                    { 22, "Italy" },
+                    { 1, "China" },
+                    { 2, "United States" },
+                    { 3, "Indonesia" },
+                    { 4, "Brazil" },
+                    { 5, "Pakistan" },
+                    { 6, "Nigeria" },
+                    { 7, "Bangladesh" },
+                    { 8, "Russia" },
+                    { 9, "Japan" },
+                    { 10, "Mexico" },
+                    { 11, "Philippines" },
+                    { 12, "Vietnam" },
+                    { 13, "Ethiopia" },
+                    { 14, "Egypt" },
+                    { 15, "Germany" },
+                    { 16, "Iran" },
+                    { 17, "Turkey" },
+                    { 18, "Democratic Republic of the Congo" },
+                    { 19, "Thailand" },
+                    { 20, "France" },
+                    { 21, "United Kingdom" },
+                    { 46, "Ghana" },
+                    { 96, "Israel" },
+                    { 47, "Yemen" },
+                    { 49, "Mozambique" },
+                    { 75, "Guinea" },
+                    { 76, "Greece" },
+                    { 77, "Tunisia" },
+                    { 78, "Portugal" },
+                    { 79, "Rwanda" },
+                    { 80, "Czech Republic" },
+                    { 81, "Haiti" },
+                    { 82, "Bolivia" },
+                    { 83, "Somalia" },
+                    { 74, "Belgium" },
+                    { 84, "Hungary" },
+                    { 86, "Sweden" },
+                    { 87, "Belarus" },
+                    { 88, "Dominican Republic" },
+                    { 89, "Azerbaijan" },
+                    { 90, "Austria" },
+                    { 91, "Honduras" },
+                    { 92, "United Arab Emirates" },
+                    { 93, "South Sudan" },
+                    { 192, "Nauru" },
+                    { 85, "Benin" },
+                    { 73, "Cuba" },
+                    { 72, "Chad" },
+                    { 71, "Zimbabwe" },
+                    { 50, "Taiwan" },
+                    { 51, "Australia" },
+                    { 52, "Syria" },
+                    { 53, "Ivory Coast" },
+                    { 54, "Madagascar" },
+                    { 55, "Angola" },
+                    { 56, "Sri Lanka" },
+                    { 57, "Cameroon" },
+                    { 58, "Romania" },
+                    { 59, "Kazakhstan" },
+                    { 60, "Netherlands" },
+                    { 61, "Chile" },
+                    { 62, "Niger" },
+                    { 63, "Burkina Faso" },
+                    { 64, "Ecuador" },
+                    { 65, "Guatemala" },
+                    { 66, "Mali" },
+                    { 67, "Malawi" },
+                    { 68, "Senegal" },
+                    { 69, "Cambodia" },
+                    { 70, "Zambia" },
+                    { 48, "North Korea" },
+                    { 193, "Vatican City" }
                 });
 
             migrationBuilder.InsertData(
@@ -256,6 +496,11 @@ namespace MvcTaskManager.Migrations
                 name: "IX_Projects_ClientLocationID",
                 table: "Projects",
                 column: "ClientLocationID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Skills_Id",
+                table: "Skills",
+                column: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -276,16 +521,22 @@ namespace MvcTaskManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Skills");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "ClientLocations");
 
             migrationBuilder.DropTable(
-                name: "ClientLocations");
+                name: "AspNetUsers");
         }
     }
 }
