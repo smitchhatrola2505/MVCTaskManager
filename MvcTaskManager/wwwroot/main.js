@@ -21,7 +21,7 @@ class AboutComponent {
 AboutComponent.ɵfac = function AboutComponent_Factory(t) { return new (t || AboutComponent)(); };
 AboutComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AboutComponent, selectors: [["about"]], decls: 2, vars: 0, template: function AboutComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, " about works!\n");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "\nAbout Works!!\n");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhYm91dC5jb21wb25lbnQuc2NzcyJ9 */"] });
 
@@ -704,6 +704,16 @@ class ProjectComponent {
         this.hideDetails = false;
         this.selectionBox = null;
     }
+    ngOnChanges(simpleChanges) {
+        console.info("-----NgOnChange Called!!");
+        for (let propName in simpleChanges) {
+            let chng = simpleChanges[propName];
+            let cur = JSON.stringify(chng.currentValue);
+            let prev = JSON.stringify(chng.previousValue);
+            console.log(`${propName}:currentValue=${cur},
+      previousValue=${prev}`);
+        }
+    }
     ngOnInit() {
         this.projectService.MyObservable.subscribe((hide) => {
             this.hideDetails = hide;
@@ -730,7 +740,7 @@ ProjectComponent.ɵcmp = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1_
     } if (rf & 2) {
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.selectionBox = _t.first);
-    } }, inputs: { project: ["currentProject", "project"], i: ["recordIndex", "i"] }, outputs: { editClick: "editClick", deleteClick: "deleteClick" }, ngContentSelectors: _c1, decls: 36, vars: 7, consts: [[1, "card", "card-primary"], [1, "card-header"], [1, "col-1"], [1, "card-body"], [1, "table", "table-borderless", 3, "hidden"], [1, "card-footer"], ["data-toggle", "modal", "data-target", "#editModal", 1, "btn", "btn-info", 3, "click"], ["data-toggle", "modal", "data-target", "#deleteModal", 1, "btn", "btn-warning", 3, "click"]], template: function ProjectComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { project: ["currentProject", "project"], i: ["recordIndex", "i"] }, outputs: { editClick: "editClick", deleteClick: "deleteClick" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]], ngContentSelectors: _c1, decls: 36, vars: 7, consts: [[1, "card", "card-primary"], [1, "card-header"], [1, "col-1"], [1, "card-body"], [1, "table", "table-borderless", 3, "hidden"], [1, "card-footer"], ["data-toggle", "modal", "data-target", "#editModal", 1, "btn", "btn-info", 3, "click"], ["data-toggle", "modal", "data-target", "#deleteModal", 1, "btn", "btn-warning", 3, "click"]], template: function ProjectComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
